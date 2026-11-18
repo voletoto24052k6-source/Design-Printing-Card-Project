@@ -1,0 +1,8 @@
+<svg id="tpl-pin" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 250" width="750" height="250">
+  <rect width="750" height="250" rx="16" fill="#FFFFFF" stroke="#94A3B8" stroke-width="2" />
+  <rect x="0" y="0" width="210" height="250" rx="16" fill="#0EA5E9" />
+  <rect x="190" y="0" width="20" height="250" fill="#0EA5E9" />
+  <text id="logo_text" x="105" y="135" font-family="Arial, sans-serif" font-size="30" font-weight="bold" fill="#FFFFFF" text-anchor="middle">LOGO</text>
+  <text id="full_name" x="480" y="115" font-family="Arial, sans-serif" font-size="38" font-weight="bold" fill="#0F172A" text-anchor="middle">LÊ MINH TÚ</text>
+  <text id="job_title" x="480" y="168" font-family="Arial, sans-serif" font-size="22" fill="#0284C7" text-anchor="middle">Quản lý Cửa hàng</text>
+</svg>

@@ -1,0 +1,20 @@
+<svg id="tpl-wedding-peach" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 595 842" width="595" height="842">
+  <rect width="595" height="842" fill="#FFF5F7" />
+  <rect x="28" y="28" width="539" height="786" fill="none" stroke="#F43F5E" stroke-width="1.5" />
+  <circle cx="70" cy="70" r="35" fill="#FDA4AF" opacity="0.6" />
+  <circle cx="110" cy="50" r="22" fill="#FB7185" opacity="0.5" />
+  <circle cx="525" cy="772" r="40" fill="#FDA4AF" opacity="0.6" />
+  <circle cx="480" cy="790" r="25" fill="#FB7185" opacity="0.5" />
+  <text id="header_title" x="297" y="135" font-family="Georgia, serif" font-size="22" fill="#BE123C" text-anchor="middle" letter-spacing="4">TRÂN TRỌNG KÍNH MỜI</text>
+  <text id="subtitle" x="297" y="175" font-family="Arial, sans-serif" font-size="16" fill="#881337" text-anchor="middle">TỚI DỰ BUỔI TIỆC CHUNG VUI CÙNG GIA ĐÌNH CHÚNG TÔI</text>
+  <line x1="180" y1="205" x2="415" y2="205" stroke="#FB7185" stroke-width="1" />
+  <text id="groom_name" x="297" y="305" font-family="Georgia, serif" font-size="42" font-weight="bold" fill="#9F1239" text-anchor="middle">Minh Tuấn</text>
+  <text x="297" y="365" font-family="Georgia, serif" font-size="30" font-style="italic" fill="#E11D48" text-anchor="middle">&amp;</text>
+  <text id="bride_name" x="297" y="425" font-family="Georgia, serif" font-size="42" font-weight="bold" fill="#9F1239" text-anchor="middle">Thanh Trúc</text>
+  <line x1="180" y1="475" x2="415" y2="475" stroke="#FB7185" stroke-width="1" />
+  <text id="event_time" x="297" y="535" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#881337" text-anchor="middle">VÀO LÚC 18:00  |  CHỦ NHẬT</text>
+  <text id="event_date" x="297" y="580" font-family="Georgia, serif" font-size="28" font-weight="bold" fill="#BE123C" text-anchor="middle">20 . 12 . 2026</text>
+  <text id="venue_name" x="297" y="645" font-family="Arial, sans-serif" font-size="19" font-weight="bold" fill="#333333" text-anchor="middle">TRUNG TÂM TIỆC CƯỚI WHITE PALACE</text>
+  <text id="venue_address" x="297" y="675" font-family="Arial, sans-serif" font-size="16" fill="#555555" text-anchor="middle">194 Hoàng Văn Thụ, Q. Phú Nhuận, TP.HCM</text>
+  <text id="footer_note" x="297" y="750" font-family="Georgia, serif" font-size="16" font-style="italic" fill="#9F1239" text-anchor="middle">Sự hiện diện của quý khách là niềm vinh hạnh của gia đình!</text>
+</svg>

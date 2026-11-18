@@ -1,0 +1,8 @@
+<svg id="tpl-wood" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 250" width="750" height="250">
+  <rect width="750" height="250" rx="14" fill="#B47B48" stroke="#5C3A21" stroke-width="4" />
+  <rect x="16" y="16" width="718" height="218" rx="8" fill="none" stroke="#4A2C11" stroke-width="1.5" />
+  <circle cx="115" cy="125" r="55" fill="none" stroke="#3E220C" stroke-width="3" />
+  <text id="logo_laser" x="115" y="135" font-family="Georgia, serif" font-size="26" font-weight="bold" fill="#3E220C" text-anchor="middle">CAFE</text>
+  <text id="full_name" x="455" y="115" font-family="Georgia, serif" font-size="40" font-weight="bold" fill="#2D1606" text-anchor="middle">TRẦN THẢO VY</text>
+  <text id="job_title" x="455" y="168" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#4A2C11" text-anchor="middle" letter-spacing="2">BARISTA TRƯỞNG</text>
+</svg>

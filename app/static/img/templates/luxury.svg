@@ -1,0 +1,17 @@
+<svg id="tpl-luxury" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" width="900" height="540">
+  <defs>
+    <linearGradient id="goldFoil" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBF2C4" />
+      <stop offset="45%" stop-color="#D4AF37" />
+      <stop offset="75%" stop-color="#AA7C11" />
+      <stop offset="100%" stop-color="#F3E5AB" />
+    </linearGradient>
+  </defs>
+  <rect width="900" height="540" fill="#0F0F0F" />
+  <rect x="30" y="30" width="840" height="480" fill="none" stroke="url(#goldFoil)" stroke-width="2" />
+  <polygon points="450,85 480,115 450,145 420,115" fill="none" stroke="url(#goldFoil)" stroke-width="2.5" />
+  <text id="company_name" x="450" y="185" font-family="Georgia, serif" font-size="20" fill="url(#goldFoil)" text-anchor="middle" letter-spacing="6">ROYAL LUXURY GROUP</text>
+  <text id="full_name" x="450" y="285" font-family="Georgia, serif" font-size="44" font-weight="bold" fill="url(#goldFoil)" text-anchor="middle" letter-spacing="3">LÊ HOÀNG NAM</text>
+  <text id="job_title" x="450" y="325" font-family="Arial, sans-serif" font-size="18" fill="#CCCCCC" text-anchor="middle" letter-spacing="4">CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ</text>
+  <text id="contact_info" x="450" y="435" font-family="Arial, sans-serif" font-size="17" fill="url(#goldFoil)" text-anchor="middle" letter-spacing="1.5">0988 999 888   •   nam.le@royalluxury.vn</text>
+</svg>

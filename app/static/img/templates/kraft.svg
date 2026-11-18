@@ -1,0 +1,11 @@
+<svg id="tpl-kraft" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" width="900" height="540">
+  <rect width="900" height="540" fill="#C49A6C" />
+  <rect x="28" y="28" width="844" height="484" fill="none" stroke="#3E2723" stroke-width="2" stroke-dasharray="10,6" />
+  <path d="M 450,75 C 470,75 485,95 450,125 C 415,95 430,75 450,75 Z" fill="#2E7D32" />
+  <text id="company_name" x="450" y="160" font-family="Georgia, serif" font-size="22" font-weight="bold" fill="#2E7D32" text-anchor="middle" letter-spacing="3">GREEN EARTH ECO</text>
+  <text id="full_name" x="450" y="255" font-family="Georgia, serif" font-size="42" font-weight="bold" fill="#3E2723" text-anchor="middle">NGÔ THANH TÂM</text>
+  <text id="job_title" x="450" y="295" font-family="Arial, sans-serif" font-size="19" fill="#4E342E" text-anchor="middle">Chuyên viên Phát triển Bền vững</text>
+  <line x1="250" y1="335" x2="650" y2="335" stroke="#3E2723" stroke-width="1" />
+  <text id="phone" x="450" y="385" font-family="Arial, sans-serif" font-size="18" fill="#3E2723" text-anchor="middle">0901 234 567  •  tam.ngo@greeneartheco.vn</text>
+  <text id="address" x="450" y="422" font-family="Arial, sans-serif" font-size="16" fill="#3E2723" text-anchor="middle">Khu đô thị Sala, TP. Thủ Đức, TP.HCM</text>
+</svg>

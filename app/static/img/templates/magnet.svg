@@ -1,0 +1,16 @@
+<svg id="tpl-magnet" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 250" width="700" height="250">
+  <defs>
+    <linearGradient id="brushedSilver" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D1D5DB" />
+      <stop offset="25%" stop-color="#F3F4F6" />
+      <stop offset="50%" stop-color="#9CA3AF" />
+      <stop offset="75%" stop-color="#E5E7EB" />
+      <stop offset="100%" stop-color="#D1D5DB" />
+    </linearGradient>
+  </defs>
+  <rect width="700" height="250" rx="12" fill="url(#brushedSilver)" stroke="#6B7280" stroke-width="3" />
+  <text id="company_name" x="350" y="65" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#374151" text-anchor="middle" letter-spacing="3">GRAND HOTEL SAIGON</text>
+  <line x1="150" y1="82" x2="550" y2="82" stroke="#4B5563" stroke-width="1.5" />
+  <text id="full_name" x="350" y="145" font-family="Arial, sans-serif" font-size="38" font-weight="bold" fill="#111827" text-anchor="middle">PHẠM NGỌC HÂN</text>
+  <text id="job_title" x="350" y="192" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#4B5563" text-anchor="middle">Lễ tân Trưởng (Front Desk)</text>
+</svg>

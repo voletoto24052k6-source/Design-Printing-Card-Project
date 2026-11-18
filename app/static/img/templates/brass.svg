@@ -1,0 +1,14 @@
+<svg id="tpl-brass" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 200" width="700" height="200">
+  <defs>
+    <linearGradient id="brassGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D97706" />
+      <stop offset="35%" stop-color="#FCD34D" />
+      <stop offset="65%" stop-color="#B45309" />
+      <stop offset="100%" stop-color="#F59E0B" />
+    </linearGradient>
+  </defs>
+  <rect width="700" height="200" rx="10" fill="url(#brassGold)" stroke="#78350F" stroke-width="3" />
+  <rect x="12" y="12" width="676" height="176" rx="6" fill="none" stroke="#451A03" stroke-width="1.5" />
+  <text id="full_name" x="350" y="98" font-family="Georgia, serif" font-size="38" font-weight="bold" fill="#270E02" text-anchor="middle" letter-spacing="2">ĐỖ HOÀNG ANH</text>
+  <text id="job_title" x="350" y="148" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#451A03" text-anchor="middle" letter-spacing="3">GIÁM ĐỐC CHI NHÁNH</text>
+</svg>

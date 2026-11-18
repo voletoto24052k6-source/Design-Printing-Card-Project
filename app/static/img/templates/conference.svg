@@ -1,0 +1,15 @@
+<svg id="tpl-conference" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 595 842" width="595" height="842">
+  <rect width="595" height="842" fill="#1E293B" />
+  <rect x="30" y="30" width="535" height="782" fill="none" stroke="#D4AF37" stroke-width="2" />
+  <text id="company_name" x="297" y="105" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#D4AF37" text-anchor="middle" letter-spacing="4">TẬP ĐOÀN TÀI CHÍNH Á CHÂU</text>
+  <line x1="200" y1="125" x2="395" y2="125" stroke="#D4AF37" stroke-width="1" />
+  <text id="main_title" x="297" y="195" font-family="Georgia, serif" font-size="36" font-weight="bold" fill="#FFFFFF" text-anchor="middle">HỘI NGHỊ KHÁCH HÀNG</text>
+  <text id="theme_title" x="297" y="245" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#FDE047" text-anchor="middle" letter-spacing="2">KIẾN TẠO TƯƠNG LAI 2026</text>
+  <text id="guest_name" x="297" y="340" font-family="Arial, sans-serif" font-size="20" fill="#F8FAFC" text-anchor="middle">Trân trọng kính mời: Ông/Bà Trần Văn Hùng</text>
+  <text id="description" x="297" y="385" font-family="Arial, sans-serif" font-size="16" fill="#CBD5E1" text-anchor="middle">Tham dự đêm tiệc tri ân và vinh danh đối tác chiến lược</text>
+  <rect x="65" y="445" width="465" height="220" fill="#0F172A" stroke="#D4AF37" stroke-width="1" />
+  <text id="event_time" x="297" y="500" font-family="Arial, sans-serif" font-size="19" font-weight="bold" fill="#D4AF37" text-anchor="middle">18:00 — Thứ Sáu, 18/12/2026</text>
+  <text id="venue_name" x="297" y="550" font-family="Arial, sans-serif" font-size="19" font-weight="bold" fill="#FFFFFF" text-anchor="middle">KHÁCH SẠN INTERCONTINENTAL SAIGON</text>
+  <text id="venue_address" x="297" y="585" font-family="Arial, sans-serif" font-size="16" fill="#94A3B8" text-anchor="middle">Góc Hai Bà Trưng &amp; Lê Duẩn, Quận 1, TP.HCM</text>
+  <text id="rsvp" x="297" y="630" font-family="Arial, sans-serif" font-size="15" fill="#FDE047" text-anchor="middle">Xác nhận tham dự: 028 3822 9999</text>
+</svg>

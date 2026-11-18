@@ -1,0 +1,12 @@
+<svg id="tpl-minimal" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" width="900" height="540">
+  <rect width="900" height="540" fill="#FFFFFF" />
+  <rect x="70" y="75" width="12" height="12" fill="#111111" />
+  <text id="company_name" x="95" y="87" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#111111" letter-spacing="3">STUDIO MINIMAL</text>
+  <text id="full_name" x="70" y="250" font-family="Arial, sans-serif" font-size="46" font-weight="bold" fill="#111111">Phạm Thu Hà</text>
+  <text id="job_title" x="70" y="292" font-family="Arial, sans-serif" font-size="20" fill="#777777">Kiến trúc sư trưởng</text>
+  <line x1="70" y1="360" x2="830" y2="360" stroke="#E5E5E5" stroke-width="1.5" />
+  <text id="phone" x="70" y="410" font-family="Arial, sans-serif" font-size="17" fill="#333333">+84 903 456 789</text>
+  <text id="email" x="70" y="442" font-family="Arial, sans-serif" font-size="17" fill="#333333">ha.pham@studiominimal.vn</text>
+  <text id="address" x="830" y="410" font-family="Arial, sans-serif" font-size="17" fill="#333333" text-anchor="end">Quận 3, TP. Hồ Chí Minh</text>
+  <text id="website" x="830" y="442" font-family="Arial, sans-serif" font-size="17" fill="#777777" text-anchor="end">www.studiominimal.vn</text>
+</svg>

@@ -1,0 +1,13 @@
+<svg id="tpl-event-paper" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 1000" width="700" height="1000">
+  <rect width="700" height="1000" fill="#FFFFFF" stroke="#94A3B8" stroke-width="2" />
+  <rect x="0" y="0" width="700" height="230" fill="#7C3AED" />
+  <text id="event_name" x="350" y="105" font-family="Arial, sans-serif" font-size="34" font-weight="bold" fill="#FFFFFF" text-anchor="middle">DIỄN ĐÀN KHỞI NGHIỆP</text>
+  <text id="event_date" x="350" y="160" font-family="Arial, sans-serif" font-size="22" fill="#DDD6FE" text-anchor="middle">15/12/2026 • TP. HỒ CHÍ MINH</text>
+  <text id="full_name" x="350" y="420" font-family="Arial, sans-serif" font-size="52" font-weight="bold" fill="#1E1B4B" text-anchor="middle">VÕ MINH KHOA</text>
+  <text id="job_title" x="350" y="485" font-family="Arial, sans-serif" font-size="28" fill="#5B21B6" text-anchor="middle">Founder &amp; CEO</text>
+  <text id="company_name" x="350" y="540" font-family="Arial, sans-serif" font-size="26" fill="#475569" text-anchor="middle">NextGen Startup Vietnam</text>
+  <rect x="190" y="640" width="320" height="120" rx="12" fill="#F3E8FF" stroke="#A855F7" stroke-width="2" />
+  <text id="qr_label" x="350" y="708" font-family="monospace" font-size="24" font-weight="bold" fill="#6B21A8" text-anchor="middle">[ QR CHECK-IN ]</text>
+  <rect x="0" y="880" width="700" height="120" fill="#4C1D95" />
+  <text id="pass_type" x="350" y="955" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="#FDE047" text-anchor="middle" letter-spacing="6">VIP PASS</text>
+</svg>

@@ -1,0 +1,14 @@
+<svg id="tpl-housewarming" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 595 842" width="595" height="842">
+  <rect width="595" height="842" fill="#F0FDF4" />
+  <polygon points="297,85 180,175 414,175" fill="#15803D" />
+  <rect x="210" y="175" width="174" height="90" fill="#166534" />
+  <rect x="275" y="210" width="44" height="55" fill="#F0FDF4" />
+  <text id="header_title" x="297" y="330" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#15803D" text-anchor="middle" letter-spacing="4">TRÂN TRỌNG KÍNH MỜI</text>
+  <text id="main_title" x="297" y="395" font-family="Georgia, serif" font-size="44" font-weight="bold" fill="#14532D" text-anchor="middle">TIỆC MỪNG TÂN GIA</text>
+  <text id="host_name" x="297" y="455" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#166534" text-anchor="middle">Gia đình Anh Minh &amp; Chị Lan</text>
+  <line x1="170" y1="490" x2="425" y2="490" stroke="#86EFAC" stroke-width="2" />
+  <text id="event_date" x="297" y="550" font-family="Arial, sans-serif" font-size="21" font-weight="bold" fill="#14532D" text-anchor="middle">11:30 Trưa — Chủ Nhật, 13/12/2026</text>
+  <text id="venue_name" x="297" y="605" font-family="Arial, sans-serif" font-size="19" font-weight="bold" fill="#15803D" text-anchor="middle">Tư gia: Biệt thự Số 12, Đường Số 5</text>
+  <text id="venue_address" x="297" y="638" font-family="Arial, sans-serif" font-size="17" fill="#374151" text-anchor="middle">Khu đô thị Phú Mỹ Hưng, Quận 7, TP.HCM</text>
+  <text id="footer_note" x="297" y="735" font-family="Georgia, serif" font-size="17" font-style="italic" fill="#166534" text-anchor="middle">Rất hân hạnh được đón tiếp quý vị đến chung vui!</text>
+</svg>

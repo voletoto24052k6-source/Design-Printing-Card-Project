@@ -1,0 +1,14 @@
+<svg id="tpl-acrylic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" width="800" height="300">
+  <defs>
+    <linearGradient id="micaClear" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F0F9FF" stop-opacity="0.8" />
+      <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#E0F2FE" stop-opacity="0.8" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="300" rx="18" fill="url(#micaClear)" stroke="#38BDF8" stroke-width="3" />
+  <rect x="35" y="45" width="12" height="210" rx="6" fill="#0284C7" />
+  <text id="company_name" x="75" y="85" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#0284C7" letter-spacing="2">SKYLINE SPA &amp; CLINIC</text>
+  <text id="full_name" x="75" y="165" font-family="Arial, sans-serif" font-size="44" font-weight="bold" fill="#0F172A">NGUYỄN BÍCH NGỌC</text>
+  <text id="job_title" x="75" y="220" font-family="Arial, sans-serif" font-size="24" fill="#334155">Chuyên viên Tư vấn Chăm sóc Da</text>
+</svg>

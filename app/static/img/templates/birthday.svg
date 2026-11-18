@@ -1,0 +1,17 @@
+<svg id="tpl-birthday" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 595 842" width="595" height="842">
+  <rect width="595" height="842" fill="#FEFCE8" />
+  <circle cx="90" cy="110" r="45" fill="#FACC15" opacity="0.5" />
+  <circle cx="510" cy="140" r="55" fill="#F472B6" opacity="0.4" />
+  <circle cx="110" cy="720" r="50" fill="#38BDF8" opacity="0.4" />
+  <circle cx="495" cy="700" r="45" fill="#A78BFA" opacity="0.4" />
+  <rect x="45" y="45" width="505" height="752" rx="30" fill="none" stroke="#F59E0B" stroke-width="3" stroke-dasharray="12,8" />
+  <text id="header_title" x="297" y="150" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#D97706" text-anchor="middle" letter-spacing="3">HAPPY BIRTHDAY!</text>
+  <text id="main_title" x="297" y="220" font-family="Georgia, serif" font-size="44" font-weight="bold" fill="#DB2777" text-anchor="middle">TIỆC SINH NHẬT</text>
+  <text id="celebrant_name" x="297" y="305" font-family="Georgia, serif" font-size="48" font-weight="bold" fill="#1E293B" text-anchor="middle">Bé Bảo An</text>
+  <text id="age_badge" x="297" y="365" font-family="Arial, sans-serif" font-size="26" font-weight="bold" fill="#0284C7" text-anchor="middle">TRÒN 5 TUỔI</text>
+  <text id="invite_text" x="297" y="445" font-family="Arial, sans-serif" font-size="18" fill="#475569" text-anchor="middle">Mời bạn đến chung vui và thổi nến cùng mình nhé!</text>
+  <rect x="85" y="495" width="425" height="175" rx="20" fill="#FFFFFF" stroke="#FDE047" stroke-width="2" />
+  <text id="event_date" x="297" y="545" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#D97706" text-anchor="middle">18:00 — Chủ Nhật, 06/12/2026</text>
+  <text id="venue_name" x="297" y="590" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1E293B" text-anchor="middle">Nhà hàng Vườn Phố</text>
+  <text id="venue_address" x="297" y="625" font-family="Arial, sans-serif" font-size="16" fill="#64748B" text-anchor="middle">250 Nguyễn Văn Linh, Quận 7, TP.HCM</text>
+</svg>

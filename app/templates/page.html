@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#521f17">
+  <title>{% if page == 'catalog_index' %}
+Bộ sưu tập thiết kế | PrintCard Studio
+
+{% elif page == 'catalog_detail' %}
+{{ item.name }} | PrintCard Studio
+
+{% elif page == 'catalog_error' %}
+Không tải được danh mục | PrintCard
+
+{% elif page == 'auth_login' %}
+Đăng nhập | PrintCard Studio
+
+{% elif page == 'auth_register' %}
+Tạo tài khoản | PrintCard Studio
+
+{% elif page == 'role_dashboard' %}
+{{ role_name }} | PrintCard Studio
+
+{% elif page == 'account_profile' %}
+Hồ sơ của tôi | PrintCard Studio
+
+{% elif page == 'account_password' %}
+Đổi mật khẩu | PrintCard Studio
+
+{% elif page == 'designs_mine' %}
+Thiết kế đã lưu | PrintCard
+
+{% elif page == 'designs_editor' %}
+Trình chỉnh sửa | PrintCard
+
+{% elif page == 'cart_index' %}
+Giỏ hàng | PrintCard
+
+{% elif page == 'cart_checkout' %}
+Xác nhận đơn | PrintCard
+
+{% elif page == 'orders_index' %}
+Đơn hàng của tôi | PrintCard
+
+{% elif page == 'orders_detail' %}
+Đơn #{{ item.id }} | PrintCard
+
+{% elif page == 'dashboard' %}
+Tài khoản | PrintCard
+
+{% elif page == 'staff_orders' %}
+Đơn hàng | PrintCard Studio
+
+{% elif page == 'staff_order_detail' %}
+Đơn #{{ item.id }} | PrintCard Studio
+
+{% elif page == 'staff_customers' %}
+Tra cứu khách hàng | PrintCard Studio
+
+{% elif page == 'staff_templates' %}
+Quản lý mẫu | PrintCard Studio
+
+{% elif page == 'staff_template_form' %}
+Mẫu thiết kế | PrintCard Studio
+
+{% elif page == 'admin_prices' %}
+Bảng giá | PrintCard Studio
+
+{% elif page == 'admin_accounts' %}
+Tài khoản | PrintCard Studio
+
+{% elif page == 'admin_account_form' %}
+Tài khoản | PrintCard Studio
+
+{% elif page == 'admin_stats' %}
+Thống kê | PrintCard Studio
+
+{% elif page == 'error_403' %}
+Không có quyền | PrintCard
+
+{% endif %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css', v='20261118e') }}">
+  <link rel="icon" href="{{ url_for('static', filename='img/Logo.png') }}">
+</head>
+<body>
+{% macro pager(endpoint, args, page_number, pages) %}{% if pages > 1 %}<nav class="pagination" aria-label="Phân trang">{% if page_number > 1 %}<a href="{{ url_for(endpoint, page=page_number-1, **args) }}">← Trang trước</a>{% endif %}<span>{{ page_number }} / {{ pages }}</span>{% if page_number < pages %}<a href="{{ url_for(endpoint, page=page_number+1, **args) }}">Trang sau →</a>{% endif %}</nav>{% endif %}{% endmacro %}
+  <header class="site-header">
+    <nav class="site-nav" aria-label="Điều hướng chính">
+      <a class="brand" href="{{ url_for('index') }}"><span class="brand-mark" aria-hidden="true">P</span><span>Design&Print Studio</span></a>
+      <div class="nav-links">
+        <a href="{{ url_for('catalog.index') }}">Bộ sưu tập</a>
+        {% if session.get('account_id') or session.get('customer_email') %}
+          {% if session.get('role') == 'customer' %}
+            <a href="{{ url_for('designs.mine') }}">Thiết kế</a>
+            <a href="{{ url_for('cart.index') }}">Giỏ hàng</a>
+            <a href="{{ url_for('orders.history') }}">Đơn hàng</a>
+            <a href="{{ url_for('account.profile') }}">Hồ sơ</a>
+          {% elif session.get('role') == 'employee' %}
+            <a href="{{ url_for('auth.employee_home') }}">Khu vực nhân viên</a>
+            <a href="{{ url_for('account.profile') }}">Hồ sơ</a>
+          {% elif session.get('role') == 'admin' %}
+            <a href="{{ url_for('auth.admin_home') }}">Quản trị</a>
+            <a href="{{ url_for('admin.accounts') }}">Quản lý tài khoản</a>
+            <a href="{{ url_for('staff.templates', status='Pending') }}">Duyệt mẫu</a>
+            <a href="{{ url_for('admin.stats') }}">Thống kê</a>
+            <a href="{{ url_for('account.profile') }}">Hồ sơ</a>
+          {% endif %}
+          <form method="post" action="{{ url_for('auth.logout') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit">Đăng xuất</button>
+          </form>
+        {% else %}
+          <a href="{{ url_for('auth.login') }}">Đăng nhập</a>
+          <a class="button nav-cta" href="{{ url_for('auth.register') }}">Tạo tài khoản</a>
+        {% endif %}
+      </div>
+    </nav>
+  </header>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}<ul class="messages">{% for category, message in messages %}<li class="{{ category }}">{{ message }}</li>{% endfor %}</ul>{% endif %}
+  {% endwith %}
+  <main class="{% if request.endpoint == 'auth.login' %}login-main{% elif request.endpoint == 'auth.register' %}auth-main{% endif %}">{% if page == 'catalog_index' %}
+<section class="page-heading">
+  <p class="eyebrow">IN ẤN THEO PHONG CÁCH CỦA BẠN</p>
+  <h1>Bộ sưu tập thiết kế</h1>
+  <p class="muted">Những thiết kế chỉn chu cho dấu ấn chuyên nghiệp và những dịp đáng nhớ.</p>
+</section>
+<form class="filters" method="get" action="{{ url_for('catalog.index') }}">
+  <label>Tìm thiết kế<input name="q" type="search" maxlength="100" value="{{ search }}" placeholder="Tên mẫu hoặc mô tả"></label>
+  <label>Danh mục<select name="category"><option value="">Tất cả danh mục</option>
+    {% for category in categories %}<option value="{{ category.id }}" {% if selected_category == category.id %}selected{% endif %}>{{ category.name }}</option>{% endfor %}
+  </select></label>
+  <button type="submit">Tìm kiếm</button>
+</form>
+<p class="muted">{{ total }} thiết kế{% if pages > 1 %} · Trang {{ page_number }} / {{ pages }}{% endif %}</p>
+{% if templates %}
+  <div class="template-grid">
+  {% for item in templates %}
+    <article class="template-card">
+      <a class="template-art" href="{{ url_for('catalog.template_detail', template_id=item.id) }}" aria-label="Xem mẫu {{ item.name }}">
+        {% if item.preview_image %}<img src="{{ url_for('static', filename=item.preview_image, v=item.preview_version) }}" alt="Ảnh xem trước: {{ item.name }}" loading="lazy">{% else %}<span class="muted">Chưa có ảnh xem trước</span>{% endif %}
+      </a>
+      <div class="template-card-body">
+        <p class="eyebrow">{{ item.product_name }}</p>
+        <h2><a href="{{ url_for('catalog.template_detail', template_id=item.id) }}">{{ item.name }}</a></h2>
+        {% if item.info %}<p class="muted">{{ item.info }}</p>{% endif %}
+        <p class="price">{{ "{:,.0f}".format(item.base_price) }} ₫</p>
+      </div>
+    </article>
+  {% endfor %}
+  </div>
+  {% if pages > 1 %}
+  <nav class="pagination" aria-label="Phân trang">
+    {% if page_number > 1 %}<a href="{{ url_for('catalog.index', q=search, category=selected_category, page=page_number-1) }}">← Trang trước</a>{% endif %}
+    <span>{{ page_number }} / {{ pages }}</span>
+    {% if page_number < pages %}<a href="{{ url_for('catalog.index', q=search, category=selected_category, page=page_number+1) }}">Trang sau →</a>{% endif %}
+  </nav>
+  {% endif %}
+{% else %}
+  <div class="empty-state"><h2>Chưa có mẫu phù hợp</h2><p>Thử đổi từ khóa hoặc danh mục.</p></div>
+{% endif %}
+
+{% elif page == 'catalog_detail' %}
+<p><a href="{{ url_for('catalog.index') }}">← Quay lại bộ sưu tập</a></p>
+<section class="detail-layout">
+  <div class="detail-art template-art-large">{% if item.preview_image %}<img src="{{ url_for('static', filename=item.preview_image, v=item.preview_version) }}" alt="Ảnh xem trước: {{ item.name }}">{% else %}<span class="muted">Chưa có ảnh xem trước</span>{% endif %}</div>
+  <div class="detail-copy">
+    <p class="eyebrow">{{ item.product_name }}</p>
+    <h1>{{ item.name }}</h1>
+    {% if item.info %}<p class="muted">{{ item.info }}</p>{% endif %}
+    <p class="price">{{ "{:,.0f}".format(item.base_price) }} ₫</p>
+    <p class="muted">Giá cơ bản của mẫu. Phí giao hàng được tính ở bước thanh toán.</p>
+    {% if session.get('customer_email') %}
+      <p><a class="button" href="{{ url_for('designs.new', template_id=item.id) }}">Tùy chỉnh mẫu</a></p>
+    {% else %}
+      <p><a class="button" href="{{ url_for('auth.login') }}">Đăng nhập để tùy chỉnh</a></p>
+    {% endif %}
+    <p class="notice">Đây là ảnh tham khảo phong cách mẫu. Bạn có thể đổi nội dung chữ ở bước tùy chỉnh.</p>
+  </div>
+</section>
+
+{% elif page == 'catalog_error' %}
+<div class="empty-state"><h1>Trang hiện chưa tải được</h1><p>Vui lòng thử lại sau ít phút.</p></div>
+
+{% elif page == 'auth_login' %}
+<div class="login-shell">
+  <section class="login-stage">
+    <div class="scene" aria-hidden="true">
+      <div class="stage-grid"></div><div class="orb orb-a"></div><div class="orb orb-b"></div>
+      <div class="guide guide-v"></div><div class="guide guide-h"></div>
+
+      <div class="deck">
+        <div class="card card-3"></div>
+        <div class="card card-2"></div>
+        <div class="card card-1">
+          <div class="face">
+            <span class="c-emblem"></span>
+            <span class="c-mark">P</span>
+            <div class="c-name">Minh Anh Studio</div>
+            <div class="c-role">Creative Director</div>
+            <div class="c-lines"><i></i><i></i><i></i></div>
+            <span class="foil"></span>
+          </div>
+          <div class="selection"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><b>90 × 54 mm</b></div>
+        </div>
+      </div>
+
+      <div class="bz">
+        <svg viewBox="0 0 320 160">
+          <line class="handle" x1="10" y1="128" x2="90" y2="8"/><line class="handle" x1="310" y1="32" x2="180" y2="160"/>
+          <path class="curve" pathLength="1" d="M10 128 C 90 8, 180 160, 310 32"/>
+          <circle class="ctrl" cx="90" cy="8" r="4"/><circle class="ctrl" cx="180" cy="160" r="4"/>
+          <rect class="anchor" x="5" y="123" width="10" height="10"/><rect class="anchor" x="305" y="27" width="10" height="10"/>
+        </svg>
+        <svg class="pen" viewBox="0 0 24 24" fill="#d4b06a" stroke="#231a15" stroke-width="1.2" stroke-linejoin="round"><path d="M12 2l6 10-6 4-6-4 6-10z"/><path d="M12 16v6" stroke-linecap="round"/><circle cx="12" cy="11" r="1.4" fill="#231a15" stroke="none"/></svg>
+      </div>
+
+      <div class="tag-type"><strong>Aa</strong><small>Playfair Display</small></div>
+      <div class="swatches">
+        <span class="sw" style="--c:#521f17;--i:0"><em>#521F17</em></span>
+        <span class="sw" style="--c:#2a211c;--i:1"><em>#2A211C</em></span>
+        <span class="sw" style="--c:#d4b06a;--i:2"><em>#D4B06A</em></span>
+        <span class="sw" style="--c:#8a3a2a;--i:3"><em>#8A3A2A</em></span>
+        <span class="sw" style="--c:#f3ead9;--i:4"><em>#F3EAD9</em></span>
+      </div>
+    </div>
+    <div class="stage-caption">
+      <p class="eyebrow">PRINTCARD STUDIO</p>
+      <h2>Thiết kế dấu ấn <em>của riêng bạn</em></h2>
+      <p class="muted">Chọn mẫu, tinh chỉnh từng chi tiết và đặt in card visit chỉn chu chỉ trong vài phút.</p>
+    </div>
+  </section>
+
+  <section class="login-panel">
+    <p class="eyebrow">CHÀO MỪNG TRỞ LẠI</p>
+    <h1>Đăng nhập</h1>
+    <p class="muted">Đăng nhập để tiếp tục các thiết kế và đơn hàng của bạn.</p>
+    <form method="post" action="{{ url_for('auth.login') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label for="login_name">Email hoặc tên đăng nhập</label><input id="login_name" name="login_name" type="text" maxlength="100" autocomplete="username" required value="{{ login_name }}">
+      <label for="password">Mật khẩu</label><input id="password" name="password" type="password" autocomplete="current-password" required>
+      <button type="submit">Đăng nhập</button>
+    </form>
+    <p class="alt">Chưa có tài khoản? <a href="{{ url_for('auth.register') }}">Đăng ký</a></p>
+  </section>
+</div>
+
+{% elif page == 'auth_register' %}
+<p class="eyebrow">THAM GIA PRINTCARD STUDIO</p>
+<h1>Tạo tài khoản</h1>
+<p class="muted">Khách hàng có thể đăng ký tự do. Tài khoản nhân viên và quản trị viên cần mã đăng ký nội bộ.</p>
+<form method="post" action="{{ url_for('auth.register') }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label for="role">Loại tài khoản</label>
+  <select id="role" name="role" required>
+    <option value="customer" {% if values.role == 'customer' %}selected{% endif %}>Khách hàng</option>
+    <option value="employee" {% if values.role == 'employee' %}selected{% endif %}>Nhân viên</option>
+    <option value="admin" {% if values.role == 'admin' %}selected{% endif %}>Quản trị viên</option>
+  </select>
+  <label for="username">Tên đăng nhập</label><input id="username" name="username" minlength="3" maxlength="50" pattern="[A-Za-z0-9_.-]{3,50}" autocomplete="username" required value="{{ values.username }}">
+  <label for="full_name">Họ và tên</label><input id="full_name" name="full_name" maxlength="100" autocomplete="name" required value="{{ values.full_name }}">
+  <label for="email">Email</label><input id="email" name="email" type="email" maxlength="100" autocomplete="email" required value="{{ values.email }}">
+  <label for="phone">Số điện thoại <span class="muted">(bắt buộc với nhân viên)</span></label><input id="phone" name="phone" maxlength="15" autocomplete="tel" value="{{ values.phone }}">
+  <label for="address">Địa chỉ</label><textarea id="address" name="address" maxlength="300" autocomplete="street-address">{{ values.address }}</textarea>
+  <label for="position">Chức vụ <span class="muted">(nhân viên, nếu có)</span></label><input id="position" name="position" maxlength="50" value="{{ values.position }}">
+  <label for="registration_code">Mã đăng ký nội bộ <span class="muted">(chỉ dành cho nhân viên/quản trị viên)</span></label><input id="registration_code" name="registration_code" type="password" autocomplete="off">
+  <label for="password">Mật khẩu (8–128 ký tự)</label><input id="password" name="password" type="password" minlength="8" maxlength="128" pattern="(?=.*\p{L})(?=.*[0-9])(?=.*[^\p{L}0-9\s]).{8,128}" title="Từ 8 đến 128 ký tự, gồm chữ cái, chữ số và ký tự đặc biệt" autocomplete="new-password" required>
+  <p class="form-hint">Tối thiểu 8 ký tự, gồm ít nhất một chữ cái, một chữ số và một ký tự đặc biệt (ví dụ: ! @ # $ %).</p>
+  <label for="confirm_password">Nhập lại mật khẩu</label><input id="confirm_password" name="confirm_password" type="password" minlength="8" maxlength="128" autocomplete="new-password" required>
+  <button type="submit">Tạo tài khoản</button>
+</form>
+<p>Đã có tài khoản? <a href="{{ url_for('auth.login') }}">Đăng nhập</a></p>
+
+{% elif page == 'role_dashboard' %}
+<section class="page-heading"><p class="eyebrow">TÀI KHOẢN {{ role_name|upper }}</p><h1>Xin chào, {{ session.get('full_name', session.get('username')) }}</h1></section>
+{% if dashboard_failed %}<p class="notice">Chưa tải được dữ liệu. Vui lòng tải lại trang.</p>{% endif %}
+{% if order_counts %}<div class="stat-grid">{% for s in ORDER_STATES %}<a class="dashboard-card stat-link" href="{{ url_for('staff.order_list', state=s) }}"><p class="eyebrow">{{ ORDER_STATE_LABELS[s] }}</p><p class="stat">{{ order_counts.get(s, 0) }}</p></a>{% endfor %}</div>{% endif %}
+{% if menu %}<div class="staff-menu">{% for m in menu %}<a class="dashboard-card" href="{{ m.url }}"><h2>{{ m.title }}</h2><p class="muted">{{ m.desc }}</p></a>{% endfor %}</div>{% endif %}
+<div class="dashboard-card">
+  <p>Vai trò: <strong>{{ role_name }}</strong> · Email: {{ session.get('email') }}</p>
+  <p><a href="{{ url_for('account.profile') }}">Hồ sơ của tôi</a> · <a href="{{ url_for('account.password') }}">Đổi mật khẩu</a></p>
+</div>
+
+{% elif page == 'account_profile' %}
+<section class="page-heading"><p class="eyebrow">TÀI KHOẢN {{ role_name|upper }}</p><h1>Hồ sơ của tôi</h1></section>
+<form class="profile-form" method="post" action="{{ url_for('account.profile') }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label>Tên đăng nhập<input value="{{ profile.username }}" readonly></label>
+  <label>Email<input value="{{ profile.email }}" readonly></label>
+  {% if profile.role == 'employee' %}<label>Chức vụ<input value="{{ profile.position }}" readonly></label><p class="form-hint">Chức vụ do quản trị viên cập nhật.</p>{% endif %}
+  <label>Họ và tên<input name="full_name" maxlength="100" required value="{{ profile.full_name }}"></label>
+  <label>Số điện thoại<input name="phone" maxlength="15" type="tel" {% if profile.role == 'employee' %}required{% endif %} value="{{ profile.phone }}"></label>
+  {% if profile.role != 'admin' %}<label>Địa chỉ<textarea name="address" maxlength="{{ 255 if profile.role == 'employee' else 300 }}">{{ profile.address }}</textarea></label>{% endif %}
+  <div class="profile-actions">
+    <button type="submit">Lưu hồ sơ</button>
+    <a class="button secondary" href="{{ url_for('account.password') }}">Đổi mật khẩu</a>
+  </div>
+</form>
+
+{% elif page == 'account_password' %}
+<section class="page-heading"><p class="eyebrow">TÀI KHOẢN</p><h1>Đổi mật khẩu</h1></section>
+<form class="profile-form" method="post" action="{{ url_for('account.password') }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label>Mật khẩu hiện tại<input type="password" name="current_password" autocomplete="current-password" required></label>
+  <label>Mật khẩu mới<input type="password" name="new_password" minlength="8" maxlength="128" pattern="(?=.*\p{L})(?=.*[0-9])(?=.*[^\p{L}0-9\s]).{8,128}" title="Từ 8 đến 128 ký tự, gồm chữ cái, chữ số và ký tự đặc biệt" autocomplete="new-password" required></label>
+  <p class="form-hint">Tối thiểu 8 ký tự, gồm ít nhất một chữ cái, một chữ số và một ký tự đặc biệt (ví dụ: ! @ # $ %).</p>
+  <label>Nhập lại mật khẩu mới<input type="password" name="confirm_password" minlength="8" maxlength="128" autocomplete="new-password" required></label>
+  <div class="profile-actions">
+    <button type="submit">Cập nhật mật khẩu</button>
+    <a class="button secondary" href="{{ url_for('account.profile') }}">Quay lại hồ sơ</a>
+  </div>
+</form>
+
+{% elif page == 'designs_mine' %}
+<section class="page-heading"><p class="eyebrow">TÀI KHOẢN</p><h1>Thiết kế của tôi</h1></section>
+{% if designs %}<div class="template-grid">{% for item in designs %}<article class="template-card"><a class="template-art" href="{{ url_for('designs.edit', design_id=item.id) }}" aria-label="Mở thiết kế {{ item.template_name }}">{% if item.image %}<img src="{{ url_for('static', filename=item.image, v=item.image_version) }}" alt="Thiết kế: {{ item.template_name }}" loading="lazy">{% else %}<span class="muted">Chưa có ảnh xem trước</span>{% endif %}</a><div class="template-card-body"><p class="eyebrow">{{ item.product_name }}</p><h2>{{ item.template_name }}</h2><a href="{{ url_for('designs.edit', design_id=item.id) }}">Mở chỉnh sửa</a></div></article>{% endfor %}</div>{% else %}<div class="empty-state"><h2>Chưa lưu thiết kế nào</h2><p>Chọn một mẫu để bắt đầu chỉnh sửa.</p><a href="{{ url_for('catalog.index') }}">Xem mẫu</a></div>{% endif %}
+
+{% elif page == 'designs_editor' %}
+<section class="page-heading"><p class="eyebrow">{{ item.product_name }}</p><h1>Chỉnh sửa: {{ item.name }}</h1><p class="muted">Bấm vào chữ để chọn, kéo để di chuyển, kéo góc để đổi cỡ hoặc xoay, bấm đúp để gõ trực tiếp.</p></section>
+<div class="editor-layout" id="design-editor"
+ data-save-url="{% if design_id %}{{ url_for('designs.save_edit', design_id=design_id) }}{% else %}{{ url_for('designs.save_new', template_id=item.id) }}{% endif %}"
+ data-csrf="{{ csrf_token() }}"{% if not design_id %} data-seed="1"{% endif %}
+ data-background="{% if background %}{{ url_for('static', filename=background, v=background_version) }}{% endif %}" data-elements="{{ elements|tojson|forceescape }}" data-canvas="{{ saved_canvas|tojson|forceescape }}" data-template="{{ template_content|tojson|forceescape }}">
+  <section class="editor-canvas-wrap"><canvas id="canvas" width="900" height="540" aria-label="Bản xem trước thiết kế"></canvas></section>
+  <section class="editor-controls">
+    <label>Nội dung chữ<textarea id="element-text" maxlength="500" rows="3" placeholder="Chọn một chữ trên mẫu, hoặc nhập nội dung rồi bấm Thêm chữ"></textarea></label>
+    <label>Phông chữ<select id="font-family"><option>Arial</option><option>Georgia</option><option>Times New Roman</option><option>Verdana</option><option>Tahoma</option><option>Trebuchet MS</option><option>Courier New</option></select></label>
+    <label>Cỡ chữ<input id="font-size" type="number" min="8" max="200" value="32"></label>
+    <label>Màu chữ<input id="font-color" type="color" value="#20242a"></label>
+    <div class="tool-row" role="group" aria-label="Định dạng và căn lề">
+      <button id="toggle-bold" class="secondary" type="button" title="In đậm"><b>B</b></button>
+      <button id="toggle-italic" class="secondary" type="button" title="In nghiêng"><i>I</i></button>
+      <button id="align-left" class="secondary" type="button" title="Căn sát lề trái">⇤</button>
+      <button id="align-center" class="secondary" type="button" title="Căn giữa trang">↔</button>
+      <button id="align-right" class="secondary" type="button" title="Căn sát lề phải">⇥</button>
+    </div>
+    <button id="add-text" type="button">Thêm chữ mới</button>
+    <button id="delete-text" class="secondary" type="button">Xóa chữ đã chọn</button>
+    <button id="undo" class="secondary" type="button">Hoàn tác</button>
+    <button id="save-design" type="button">Lưu thiết kế</button>
+    <p id="editor-message" aria-live="polite"></p>
+  </section>
+</div>
+{% if design_id %}<form class="add-to-cart" method="post" action="{{ url_for('cart.add', design_id=design_id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><label>Số lượng<input type="number" name="quantity" min="1" value="1" required></label><button type="submit">Thêm giỏ hàng</button></form>{% endif %}
+<p><a href="{{ url_for('designs.mine') }}">Thiết kế đã lưu</a></p>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js" defer></script>
+<script src="{{ url_for('static', filename='js/design-editor.js', v='20261118e') }}" defer></script>
+
+{% elif page == 'cart_index' %}
+<section class="page-heading"><p class="eyebrow">ĐẶT HÀNG</p><h1>Giỏ hàng</h1></section>
+{% if items %}
+<div class="table-wrap"><table><thead><tr><th>Mẫu</th><th>Đơn giá</th><th>Số lượng</th><th>Thành tiền</th><th></th></tr></thead><tbody>
+{% for item in items %}<tr><td><div class="cart-line">{% if item.image %}<img class="cart-thumb" src="{{ url_for('static', filename=item.image, v=item.image_version) }}" alt="">{% endif %}<div><strong>{{ item.template_name }}</strong><br><span class="muted">{{ item.product_name }}</span></div></div></td><td>{{ "{:,.0f}".format(item.unit_price) }} ₫</td><td><form class="inline-form" method="post" action="{{ url_for('cart.update', design_id=item.design_id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="number" min="1" name="quantity" value="{{ item.quantity }}" required><button type="submit">Cập nhật</button></form></td><td>{{ "{:,.0f}".format(item.total) }} ₫</td><td><form method="post" action="{{ url_for('cart.remove', design_id=item.design_id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="secondary" type="submit">Xóa</button></form></td></tr>{% endfor %}
+</tbody></table></div>
+<p class="price">Tạm tính: {{ "{:,.0f}".format(subtotal) }} ₫</p><p><a class="button" href="{{ url_for('cart.checkout') }}">Tiếp tục đặt hàng</a></p>
+{% else %}<div class="empty-state"><h2>Giỏ hàng trống</h2><p>Lưu một thiết kế rồi thêm vào giỏ.</p><a href="{{ url_for('catalog.index') }}">Xem mẫu thiết kế</a></div>{% endif %}
+
+{% elif page == 'cart_checkout' %}
+<section class="page-heading"><p class="eyebrow">ĐẶT HÀNG</p><h1>Xác nhận đơn</h1></section>
+<div class="checkout-layout"><section class="dashboard-card"><h2>Thông tin giao hàng</h2>
+<form method="post" action="{{ url_for('cart.checkout') }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<label>Địa chỉ nhận hàng<textarea name="address" maxlength="300" required>{{ address }}</textarea></label>
+<label>Phương thức giao hàng<select name="shipping_option" required>{% for option in options %}<option value="{{ loop.index0 }}">{{ option.method }} · {{ "{:,.0f}".format(option.fee) }} ₫</option>{% endfor %}</select></label>
+<label>Thanh toán<select name="payment_method"><option>Thanh toán khi nhận hàng (COD)</option></select></label>
+<p class="muted">COD được ghi nhận là Pending; ứng dụng chưa xác nhận thu tiền.</p>
+<button type="submit">Xác nhận đặt hàng</button>
+</form></section>
+<section class="dashboard-card"><h2>Tóm tắt</h2>{% for item in items %}<p>{{ item.template_name }} × {{ item.quantity }} <span class="muted">{{ "{:,.0f}".format(item.total) }} ₫</span></p>{% endfor %}<p class="price">Tạm tính: {{ "{:,.0f}".format(subtotal) }} ₫</p><p class="muted">Phí giao hàng được chốt sau khi chọn phương thức.</p></section></div>
+
+{% elif page == 'orders_index' %}
+<section class="page-heading"><p class="eyebrow">TÀI KHOẢN</p><h1>Lịch sử đơn hàng</h1></section>
+{% if orders %}<div class="table-wrap"><table><thead><tr><th>Mã</th><th>Ngày</th><th>Trạng thái</th><th>Tạm tính</th><th>Thanh toán</th></tr></thead><tbody>{% for item in orders %}<tr><td><a href="{{ url_for('orders.detail', order_id=item.id) }}">#{{ item.id }}</a></td><td>{{ item.date }}</td><td>{{ item.state }}</td><td>{{ "{:,.0f}".format(item.subtotal) }} ₫</td><td>{{ item.payment_state }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-state"><h2>Chưa có đơn hàng</h2><a href="{{ url_for('catalog.index') }}">Duyệt mẫu</a></div>{% endif %}
+
+{% elif page == 'orders_detail' %}
+<p><a href="{{ url_for('orders.history') }}">← Lịch sử đơn hàng</a></p><section class="page-heading"><p class="eyebrow">ĐƠN HÀNG #{{ item.id }}</p><h1>{{ item.state }}</h1><p>{{ item.date }}</p></section>
+<div class="checkout-layout"><section class="dashboard-card"><h2>Sản phẩm</h2>{% for line in item.details %}<div class="order-line">{% if line.image %}<img class="cart-thumb" src="{{ url_for('static', filename=line.image, v=line.image_version) }}" alt="Thiết kế {{ line.design_name }}">{% endif %}<p>{{ line.design_name }} · {{ line.product_name }} × {{ line.quantity }} — {{ "{:,.0f}".format(line.total) }} ₫</p>
+{% if line.design_score %}<p class="muted">Đánh giá: thiết kế {{ line.design_score }}/5 · chất lượng in {{ line.quality_score }}/5</p>{% elif item.state == 'Delivered' %}<form class="review-form" method="post" action="{{ url_for('orders.review', order_id=item.id, detail_id=line.detail_id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><label>Thiết kế<select name="design" required><option value="">Chọn điểm</option>{% for score in range(1,6) %}<option value="{{ score }}">{{ score }} / 5</option>{% endfor %}</select></label><label>Chất lượng in<select name="quality" required><option value="">Chọn điểm</option>{% for score in range(1,6) %}<option value="{{ score }}">{{ score }} / 5</option>{% endfor %}</select></label><button type="submit">Gửi đánh giá</button></form>{% endif %}</div>{% endfor %}<p>Tạm tính: {{ "{:,.0f}".format(item.subtotal) }} ₫</p><p>Giao hàng: {{ item.shipping_method }} — {{ "{:,.0f}".format(item.shipping_fee) }} ₫</p><p class="price">Tổng thanh toán: {{ "{:,.0f}".format(item.total) }} ₫</p><p>{{ item.payment_method }} · {{ item.payment_state }}</p><p>Địa chỉ: {{ item.address }}</p></section>
+<section class="dashboard-card"><h2>Lịch sử trạng thái</h2><ol>{% for entry in item.history %}<li>{{ entry.state }} · {{ entry.time }}</li>{% endfor %}</ol></section></div>
+
+{% elif page == 'dashboard' %}
+<section class="page-heading"><p class="eyebrow">TÀI KHOẢN KHÁCH HÀNG</p><h1>Xin chào, {{ customer_name }}</h1></section>
+<div class="dashboard-card">
+  <p>Đang đăng nhập bằng {{ customer_email }}.</p>
+  <p><a href="{{ url_for('account.profile') }}">Quản lý hồ sơ</a></p>
+  <p><a href="{{ url_for('account.password') }}">Đổi mật khẩu</a></p>
+  <p><a href="{{ url_for('designs.mine') }}">Xem thiết kế đã lưu</a></p>
+  <p><a href="{{ url_for('orders.history') }}">Theo dõi đơn hàng</a></p>
+  <p><a href="{{ url_for('catalog.index') }}">Duyệt mẫu thiết kế</a></p>
+</div>
+
+{% elif page == 'staff_orders' %}
+<section class="page-heading"><p class="eyebrow">KHU VỰC NHÂN VIÊN</p><h1>Đơn hàng</h1><p class="muted">Tiếp nhận đơn mới, kiểm tra thông tin và theo dõi tiến độ xử lý.</p></section>
+<form class="filters" method="get" action="{{ url_for('staff.order_list') }}">
+  <label>Tìm đơn<input name="q" type="search" maxlength="100" value="{{ q }}" placeholder="Mã đơn, tên, SĐT hoặc email khách"></label>
+  <label>Trạng thái<select name="state"><option value="">Tất cả</option>{% for s in ORDER_STATES %}<option value="{{ s }}" {% if state == s %}selected{% endif %}>{{ ORDER_STATE_LABELS[s] }}</option>{% endfor %}</select></label>
+  <button type="submit">Lọc</button>
+</form>
+<p class="muted">{{ total }} đơn{% if pages > 1 %} · Trang {{ page_number }} / {{ pages }}{% endif %}</p>
+{% if items %}<div class="table-wrap"><table><thead><tr><th>Mã</th><th>Ngày đặt</th><th>Khách hàng</th><th>Trạng thái</th><th>Thanh toán</th><th>Giá trị</th></tr></thead><tbody>
+{% for o in items %}<tr><td><a href="{{ url_for('staff.order_detail', order_id=o.id) }}">#{{ o.id }}</a></td><td>{{ o.date|dt }}</td><td>{{ o.customer }}<br><span class="muted">{{ o.phone }}</span></td><td><span class="badge st-{{ o.state|lower }}">{{ ORDER_STATE_LABELS.get(o.state, o.state) }}</span></td><td>{{ PAYMENT_LABELS.get(o.payment_state, o.payment_state or '—') }}</td><td>{{ (o.payment_total if o.payment_total is not none else o.subtotal)|money }}</td></tr>{% endfor %}
+</tbody></table></div>{{ pager(pager_endpoint, args, page_number, pages) }}
+{% else %}<div class="empty-state"><h2>Không có đơn phù hợp</h2><p>Thử đổi từ khóa hoặc trạng thái.</p></div>{% endif %}
+
+{% elif page == 'staff_order_detail' %}
+<p><a href="{{ url_for('staff.order_list') }}">← Danh sách đơn hàng</a></p>
+<section class="page-heading"><p class="eyebrow">ĐƠN HÀNG #{{ item.id }}</p><h1>{{ ORDER_STATE_LABELS.get(item.state, item.state) }}</h1><p class="muted">Đặt lúc {{ item.date|dt }}</p></section>
+<div class="checkout-layout">
+<section class="dashboard-card"><h2>Sản phẩm &amp; tệp thiết kế</h2>
+{% for line in item.details %}<div class="order-line">{% if line.image %}<img class="cart-thumb" src="{{ url_for('static', filename=line.image, v=line.image_version) }}" alt="Thiết kế {{ line.design_name }}">{% endif %}
+<p><strong>{{ line.design_name }}</strong> · {{ line.product_name }}{% if line.size %} · {{ line.size }}{% endif %} × {{ line.quantity }} — {{ line.total|money }}</p>
+{% if line.has_custom_image %}<p><a href="{{ url_for('static', filename=line.image, v=line.image_version) }}" download="thiet-ke-{{ line.design_id }}.png">Tải ảnh thiết kế của khách</a> <span class="muted">(bản xem trước PNG, cần kiểm tra lại trước khi in)</span></p>{% else %}<p class="muted">Khách chưa có ảnh thiết kế đã lưu; đang hiển thị ảnh mẫu.</p>{% endif %}</div>{% endfor %}
+<p>Tạm tính: {{ item.subtotal|money }}</p><p>Giao hàng: {{ item.shipping_method or '—' }} — {{ item.shipping_fee|money }}</p><p class="price">Tổng thanh toán: {{ (item.total if item.total is not none else item.subtotal)|money }}</p>
+</section>
+<section class="dashboard-card"><h2>Khách hàng</h2>
+<p><strong>{{ item.customer }}</strong></p><p>{{ item.phone or '—' }} · {{ item.email }}</p><p>Địa chỉ nhận: {{ item.address }}</p>
+<h2>Trạng thái đơn</h2>
+{% if can_manage %}{% if order_next %}<div class="action-row">{% for s in order_next %}<form method="post" action="{{ url_for('staff.order_set_state', order_id=item.id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="new_state" value="{{ s }}"><button type="submit" {% if s != 'Cancelled' %}{% else %}class="secondary" onclick="return confirm('Hủy đơn #{{ item.id }}?')"{% endif %}>{% if s == 'Cancelled' %}Hủy đơn{% else %}→ {{ ORDER_STATE_LABELS[s] }}{% endif %}</button></form>{% endfor %}</div>{% else %}<p class="muted">Đơn đã ở trạng thái cuối.</p>{% endif %}{% else %}<p class="muted">Tài khoản của bạn chỉ có quyền xem đơn hàng.</p>{% endif %}
+<h2>Thanh toán</h2>
+<p>{{ item.payment_method or '—' }} · <span class="badge pay-{{ (item.payment_state or '')|lower }}">{{ PAYMENT_LABELS.get(item.payment_state, item.payment_state or '—') }}</span>{% if item.payment_time %} · {{ item.payment_time|dt }}{% endif %}</p>
+{% if can_manage and payment_next %}<div class="action-row">{% for s in payment_next %}<form method="post" action="{{ url_for('staff.order_set_payment', order_id=item.id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="new_state" value="{{ s }}"><button class="{% if s != 'Paid' %}secondary{% endif %}" type="submit">{{ PAYMENT_LABELS[s] }}</button></form>{% endfor %}</div>{% endif %}
+<h2>Lịch sử xử lý</h2><ol>{% for h in item.history %}<li>{{ ORDER_STATE_LABELS.get(h.state, h.state) }} · {{ h.time|dt }}{% if h.employee %} · {{ h.employee }}{% endif %}</li>{% endfor %}</ol>
+</section></div>
+
+{% elif page == 'staff_customers' %}
+<section class="page-heading"><p class="eyebrow">KHU VỰC NHÂN VIÊN</p><h1>Tra cứu khách hàng</h1><p class="muted">Chỉ xem thông tin cần thiết để hỗ trợ; không thay đổi hồ sơ khách hàng.</p></section>
+<form class="filters" method="get" action="{{ url_for('staff.customers') }}">
+  <label>Tìm khách hàng<input name="q" type="search" maxlength="100" value="{{ q }}" placeholder="Mã KH, tên, SĐT hoặc email"></label>
+  <span></span><button type="submit">Tìm</button>
+</form>
+<p class="muted">{{ total }} khách hàng{% if pages > 1 %} · Trang {{ page_number }} / {{ pages }}{% endif %}</p>
+{% if items %}<div class="table-wrap"><table><thead><tr><th>Mã</th><th>Họ tên</th><th>Liên hệ</th><th>Địa chỉ</th><th>Đơn</th><th>Trạng thái</th></tr></thead><tbody>
+{% for c in items %}<tr><td>{{ c.id }}</td><td>{{ c.name }}</td><td>{{ c.email }}<br><span class="muted">{{ c.phone or '—' }}</span></td><td>{{ c.address or '—' }}</td><td>{% if c.orders %}<a href="{{ url_for('staff.order_list', q=c.email) }}">{{ c.orders }} đơn</a>{% else %}0{% endif %}</td><td>{% if c.active %}Hoạt động{% else %}<span class="badge st-cancelled">Đã khóa</span>{% endif %}</td></tr>{% endfor %}
+</tbody></table></div>{{ pager(pager_endpoint, args, page_number, pages) }}
+{% else %}<div class="empty-state"><h2>Không tìm thấy khách hàng</h2></div>{% endif %}
+
+{% elif page == 'staff_templates' %}
+<section class="page-heading"><p class="eyebrow">{% if is_admin %}QUẢN TRỊ{% else %}KHU VỰC NHÂN VIÊN{% endif %}</p><h1>{% if status == 'Pending' %}Mẫu chờ duyệt{% else %}Quản lý mẫu thiết kế{% endif %}</h1></section>
+<form class="filters filters-3" method="get" action="{{ url_for('staff.templates') }}">
+  <label>Tìm mẫu<input name="q" type="search" maxlength="100" value="{{ q }}" placeholder="Tên hoặc mô tả"></label>
+  <label>Sản phẩm<select name="product"><option value="">Tất cả</option>{% for p in products %}<option value="{{ p.id }}" {% if product_id == p.id %}selected{% endif %}>{{ p.name }}</option>{% endfor %}</select></label>
+  <label>Duyệt<select name="status"><option value="">Tất cả</option>{% for k, v in APPROVAL_LABELS.items() %}<option value="{{ k }}" {% if status == k %}selected{% endif %}>{{ v }}</option>{% endfor %}</select></label>
+  <button type="submit">Lọc</button>
+</form>
+<p class="muted">{{ total }} mẫu{% if pages > 1 %} · Trang {{ page_number }} / {{ pages }}{% endif %} · <a class="button" href="{{ url_for('staff.template_new') }}">Tạo mẫu mới</a></p>
+{% if items %}<div class="template-grid">{% for t in items %}
+<article class="template-card"><div class="template-art">{% if t.preview_image %}<img src="{{ url_for('static', filename=t.preview_image, v=t.preview_version) }}" alt="{{ t.name }}" loading="lazy">{% else %}<span class="muted">Chưa có ảnh</span>{% endif %}</div>
+<div class="template-card-body"><p class="eyebrow">{{ t.product_name }} · <span class="badge ap-{{ t.approval|lower }}">{{ APPROVAL_LABELS.get(t.approval, t.approval) }}</span></p>
+<h2>#{{ t.id }} {{ t.name }}</h2><p class="price">{{ t.price|money }}</p>
+<div class="action-row"><a class="button secondary" href="{{ url_for('staff.template_edit', template_id=t.id) }}">Sửa</a>
+<form method="post" action="{{ url_for('staff.template_delete', template_id=t.id) }}" onsubmit="return confirm('Xóa mẫu này?')"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="secondary" type="submit">Xóa</button></form></div>
+{% if is_admin and t.approval != 'Approved' %}<form class="action-row" method="post" action="{{ url_for('admin.template_review', template_id=t.id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button name="decision" value="approve" type="submit">Duyệt</button>{% if t.approval == 'Pending' %}<button class="secondary" name="decision" value="reject" type="submit">Từ chối</button>{% endif %}</form>{% elif is_admin %}<form class="action-row" method="post" action="{{ url_for('admin.template_review', template_id=t.id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="secondary" name="decision" value="reject" type="submit">Ẩn khỏi khách</button></form>{% endif %}
+</div></article>{% endfor %}</div>{{ pager(pager_endpoint, args, page_number, pages) }}
+{% else %}<div class="empty-state"><h2>Chưa có mẫu phù hợp</h2></div>{% endif %}
+
+{% elif page == 'staff_template_form' %}
+<p><a href="{{ url_for('staff.templates') }}">← Danh sách mẫu</a></p>
+<section class="page-heading"><p class="eyebrow">QUẢN LÝ MẪU</p><h1>{% if item %}Sửa mẫu #{{ item.id }}{% else %}Tạo mẫu mới{% endif %}</h1>{% if not is_admin %}<p class="muted">Sau khi lưu, mẫu chuyển sang “Chờ duyệt” cho tới khi quản trị viên phê duyệt.</p>{% endif %}</section>
+<form class="profile-form" method="post" enctype="multipart/form-data" action="{% if item %}{{ url_for('staff.template_edit', template_id=item.id) }}{% else %}{{ url_for('staff.template_new') }}{% endif %}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label>Tên mẫu<input name="name" maxlength="100" required value="{{ values.name }}"></label>
+  <label>Loại sản phẩm<select name="product_id" required><option value="">Chọn loại</option>{% for p in products %}<option value="{{ p.id }}" {% if values.product_id == p.id|string %}selected{% endif %}>{{ p.name }}</option>{% endfor %}</select></label>
+  <label>Giá cơ bản (₫){% if not is_admin %} <span class="muted">(quản trị viên có thể điều chỉnh)</span>{% endif %}<input name="price" inputmode="numeric" pattern="[0-9]+" required value="{{ values.price }}"></label>
+  <label>Mô tả / chất liệu<textarea name="info" maxlength="500">{{ values.info }}</textarea></label>
+  <label>Mã bố cục<input name="layout" maxlength="50" pattern="[A-Za-z0-9_-]+" value="{{ values.layout }}" placeholder="vd: classic"></label>
+  <label>Kích thước<input name="size" maxlength="20" value="{{ values.size }}" placeholder="90x54mm hoặc A5"></label>
+  <label>Ảnh mẫu (PNG, JPG, WEBP, tối đa 2 MB){% if item and item.preview_image %}<br><img class="cart-thumb" src="{{ url_for('static', filename=item.preview_image, v=item.preview_version) }}" alt="">{% endif %}<input name="image" type="file" accept="image/png,image/jpeg,image/webp"></label>
+  <button type="submit">Lưu mẫu</button>
+</form>
+
+{% elif page == 'admin_prices' %}
+<section class="page-heading"><p class="eyebrow">QUẢN TRỊ</p><h1>Bảng giá sản phẩm</h1></section>
+<form class="filters" method="get" action="{{ url_for('admin.prices') }}">
+  <label>Tìm mẫu<input name="q" type="search" maxlength="100" value="{{ q }}"></label>
+  <label>Sản phẩm<select name="product"><option value="">Tất cả</option>{% for p in products %}<option value="{{ p.id }}" {% if product_id == p.id %}selected{% endif %}>{{ p.name }}</option>{% endfor %}</select></label>
+  <button type="submit">Lọc</button>
+</form>
+<p class="muted">{{ total }} mẫu{% if pages > 1 %} · Trang {{ page_number }} / {{ pages }}{% endif %}</p>
+{% if items %}<div class="table-wrap"><table><thead><tr><th>Mã</th><th>Mẫu</th><th>Sản phẩm</th><th>Duyệt</th><th>Giá (₫)</th></tr></thead><tbody>
+{% for t in items %}<tr><td>{{ t.id }}</td><td>{{ t.name }}</td><td>{{ t.product_name }}</td><td>{{ APPROVAL_LABELS.get(t.approval, t.approval) }}</td><td><form class="inline-form" method="post" action="{{ url_for('admin.price_update', template_id=t.id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input name="price" inputmode="numeric" pattern="[0-9]+" required value="{{ t.price|int }}" aria-label="Giá mẫu {{ t.name }}"><button type="submit">Lưu</button></form></td></tr>{% endfor %}
+</tbody></table></div>{{ pager(pager_endpoint, args, page_number, pages) }}
+{% else %}<div class="empty-state"><h2>Không có mẫu phù hợp</h2></div>{% endif %}
+
+{% elif page == 'admin_accounts' %}
+<section class="page-heading"><p class="eyebrow">QUẢN TRỊ</p><h1>Quản lý tài khoản</h1></section>
+<form class="filters filters-3" method="get" action="{{ url_for('admin.accounts') }}">
+  <label>Tìm tài khoản<input name="q" type="search" maxlength="100" value="{{ q }}" placeholder="Tên đăng nhập, email, họ tên"></label>
+  <label>Vai trò<select name="role"><option value="">Tất cả</option>{% for r, label in [('Customer','Khách hàng'),('Employee','Nhân viên'),('Admin','Quản trị viên')] %}<option value="{{ r }}" {% if role == r %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+  <label>Trạng thái<select name="status"><option value="">Tất cả</option><option value="active" {% if status == 'active' %}selected{% endif %}>Hoạt động</option><option value="locked" {% if status == 'locked' %}selected{% endif %}>Đã khóa</option></select></label>
+  <button type="submit">Lọc</button>
+</form>
+<p class="muted">{{ total }} tài khoản{% if pages > 1 %} · Trang {{ page_number }} / {{ pages }}{% endif %} · <a class="button" href="{{ url_for('admin.account_new') }}">Tạo tài khoản</a></p>
+{% if items %}<div class="table-wrap"><table><thead><tr><th>Tài khoản</th><th>Họ tên</th><th>Vai trò</th><th>Chức vụ</th><th>Trạng thái</th><th></th></tr></thead><tbody>
+{% for a in items %}<tr><td><strong>{{ a.username }}</strong><br><span class="muted">{{ a.email }}</span></td><td>{{ a.full_name }}<br><span class="muted">{{ a.phone }}</span></td><td>{{ {'Customer':'Khách hàng','Employee':'Nhân viên','Admin':'Quản trị viên'}.get(a.role, a.role) }}</td><td>{{ a.position or '—' }}</td><td>{% if a.active %}Hoạt động{% else %}<span class="badge st-cancelled">Đã khóa</span>{% endif %}</td>
+<td><div class="action-row"><a class="button secondary" href="{{ url_for('admin.account_edit', account_id=a.id) }}">Sửa</a>
+{% if a.id != me %}<form method="post" action="{{ url_for('admin.account_active', account_id=a.id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="active" value="{% if a.active %}0{% else %}1{% endif %}"><button class="secondary" type="submit">{% if a.active %}Khóa{% else %}Mở khóa{% endif %}</button></form>
+<form method="post" action="{{ url_for('admin.account_delete', account_id=a.id) }}" onsubmit="return confirm('Xóa tài khoản {{ a.username }}?')"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="secondary" type="submit">Xóa</button></form>{% endif %}</div></td></tr>{% endfor %}
+</tbody></table></div>{{ pager(pager_endpoint, args, page_number, pages) }}
+{% else %}<div class="empty-state"><h2>Không có tài khoản phù hợp</h2></div>{% endif %}
+
+{% elif page == 'admin_account_form' %}
+<p><a href="{{ url_for('admin.accounts') }}">← Danh sách tài khoản</a></p>
+<section class="page-heading"><p class="eyebrow">QUẢN TRỊ</p><h1>{% if account %}Sửa tài khoản {{ account.username }}{% else %}Tạo tài khoản{% endif %}</h1></section>
+{% set role_key = (account.role|lower) if account else values.role %}
+<form class="profile-form" method="post" action="{% if account %}{{ url_for('admin.account_edit', account_id=account.id) }}{% else %}{{ url_for('admin.account_new') }}{% endif %}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  {% if account %}<label>Email<input value="{{ account.email }}" readonly></label>{% else %}
+  <label>Vai trò<select name="role"><option value="employee" {% if values.role == 'employee' %}selected{% endif %}>Nhân viên</option><option value="admin" {% if values.role == 'admin' %}selected{% endif %}>Quản trị viên</option><option value="customer" {% if values.role == 'customer' %}selected{% endif %}>Khách hàng</option></select></label>
+  <label>Tên đăng nhập<input name="username" minlength="3" maxlength="50" pattern="[A-Za-z0-9_.-]{3,50}" required value="{{ values.username }}"></label>
+  <label>Email<input name="email" type="email" maxlength="100" required value="{{ values.email }}"></label>{% endif %}
+  <label>Họ và tên<input name="full_name" maxlength="100" required value="{{ values.full_name }}"></label>
+  <label>Số điện thoại<input name="phone" maxlength="15" value="{{ values.phone }}"></label>
+  {% if not account or role_key != 'admin' %}<label>Địa chỉ<textarea name="address" maxlength="300">{{ values.address }}</textarea></label>{% endif %}
+  {% if not account or role_key == 'employee' %}<label>Chức vụ (loại nhân viên) <span class="muted">— chỉ áp dụng cho nhân viên</span><input name="position" maxlength="50" list="positions" value="{{ values.position }}"><datalist id="positions">{% for p in positions %}<option value="{{ p }}">{% endfor %}</datalist></label>
+  <p class="muted">Có “thiết kế” → quản lý mẫu · có “chăm sóc” → tra cứu khách hàng/đơn (chỉ xem) · các chức vụ khác → xử lý đơn và thanh toán.</p>{% endif %}
+  <label>{% if account %}Mật khẩu mới (để trống nếu giữ nguyên){% else %}Mật khẩu (8–128 ký tự){% endif %}<input name="password" type="password" minlength="8" maxlength="128" pattern="(?=.*\p{L})(?=.*[0-9])(?=.*[^\p{L}0-9\s]).{8,128}" title="Từ 8 đến 128 ký tự, gồm chữ cái, chữ số và ký tự đặc biệt" autocomplete="new-password" {% if not account %}required{% endif %}></label>
+  <p class="form-hint">Tối thiểu 8 ký tự, gồm ít nhất một chữ cái, một chữ số và một ký tự đặc biệt (ví dụ: ! @ # $ %).</p>
+  <button type="submit">Lưu</button>
+</form>
+
+{% elif page == 'admin_stats' %}
+<section class="page-heading"><p class="eyebrow">QUẢN TRỊ</p><h1>Báo cáo &amp; thống kê</h1></section>
+<form class="filters" method="get" action="{{ url_for('admin.stats') }}">
+  <label>Từ ngày<input type="date" name="from" value="{{ start.isoformat() }}"></label>
+  <label>Đến ngày<input type="date" name="to" value="{{ end.isoformat() }}"></label>
+  <button type="submit">Xem</button>
+</form>
+<div class="stat-grid">
+  <div class="dashboard-card"><p class="eyebrow">Số đơn</p><p class="stat">{{ report.orders }}</p></div>
+  <div class="dashboard-card"><p class="eyebrow">Giá trị đơn</p><p class="stat">{{ report.value|money }}</p></div>
+  <div class="dashboard-card"><p class="eyebrow">Đã thu</p><p class="stat">{{ report.paid|money }}</p></div>
+  <div class="dashboard-card"><p class="eyebrow">Khách mới</p><p class="stat">{{ report.new_customers }}</p></div>
+  <div class="dashboard-card"><p class="eyebrow">Đánh giá TB ({{ report.reviews }})</p><p class="stat">{% if report.reviews %}{{ '%.1f'|format(report.avg_design) }} / {{ '%.1f'|format(report.avg_quality) }}{% else %}—{% endif %}</p><p class="muted">thiết kế / chất lượng in</p></div>
+</div>
+<h2>Theo tháng</h2>
+<div class="table-wrap"><table><thead><tr><th>Tháng</th><th>Đơn</th><th>Giá trị đơn</th><th></th><th>Đã thu</th><th>Khách mới</th></tr></thead><tbody>
+{% for m in report.months %}<tr><td>{{ m.label }}</td><td>{{ m.orders }}</td><td>{{ m.value|money }}</td><td class="bar-cell"><div class="bar"><span style="width: {{ m.bar }}%"></span></div></td><td>{{ m.paid|money }}</td><td>{{ m.new_customers }}</td></tr>{% endfor %}
+</tbody></table></div>
+<h2>Đơn theo trạng thái</h2>
+<div class="stat-grid">{% for s in ORDER_STATES %}<div class="dashboard-card"><p class="eyebrow">{{ ORDER_STATE_LABELS[s] }}</p><p class="stat">{{ report.by_state.get(s, 0) }}</p></div>{% endfor %}</div>
+<h2>Mẫu bán chạy</h2>
+{% if report.top %}<div class="table-wrap"><table><thead><tr><th>Mẫu</th><th>Sản phẩm</th><th>Số lượng</th><th>Đơn</th><th>Doanh số</th><th>Đánh giá TB</th></tr></thead><tbody>
+{% for t in report.top %}<tr><td>{{ t.name }}</td><td>{{ t.product }}</td><td>{{ t.quantity }}</td><td>{{ t.orders }}</td><td>{{ t.total|money }}</td><td>{% if t.design is not none and t.quality is not none %}{{ '%.1f'|format(t.design) }} / {{ '%.1f'|format(t.quality) }}{% else %}—{% endif %}</td></tr>{% endfor %}
+</tbody></table></div>{% else %}<p class="muted">Chưa có dữ liệu trong khoảng này.</p>{% endif %}
+<h2>Hiệu suất nhân viên</h2>
+{% if report.staff %}<div class="table-wrap"><table><thead><tr><th>Nhân viên</th><th>Chức vụ</th><th>Lần cập nhật</th><th>Đơn đã xử lý</th><th>Đơn đã giao</th></tr></thead><tbody>
+{% for s in report.staff %}<tr><td>{{ s.name }}</td><td>{{ s.position or '—' }}</td><td>{{ s.changes }}</td><td>{{ s.orders }}</td><td>{{ s.delivered }}</td></tr>{% endfor %}
+</tbody></table></div>{% else %}<p class="muted">Chưa có lượt cập nhật trạng thái nào được ghi nhận kèm nhân viên.</p>{% endif %}
+
+{% elif page == 'error_403' %}
+<h1>Không có quyền truy cập</h1><p>Tài khoản hiện tại không được phép mở trang này.</p>
+
+{% endif %}</main>
+  <footer class="site-footer"><span>PrintCard Studio</span><span>Thiết kế tinh tế · In ấn chỉn chu</span></footer>
+<script>
+(function () {
+  var EYE = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+  var EYE_OFF = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.9 17.9A10.6 10.6 0 0 1 12 19c-6.4 0-10-7-10-7a18.6 18.6 0 0 1 5.1-5.9"/><path d="M9.9 4.2A9.8 9.8 0 0 1 12 5c6.4 0 10 7 10 7a18.5 18.5 0 0 1-2.2 3.2"/><path d="M14.1 14.1A3 3 0 1 1 9.9 9.9"/><path d="M2 2l20 20"/></svg>';
+  document.querySelectorAll('input[type="password"]').forEach(function (input) {
+    var wrap = document.createElement('span');
+    wrap.className = 'password-field';
+    input.parentNode.insertBefore(wrap, input);
+    wrap.appendChild(input);
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'password-toggle';
+    btn.setAttribute('aria-label', 'Hiện mật khẩu');
+    btn.setAttribute('aria-pressed', 'false');
+    btn.innerHTML = EYE;
+    btn.addEventListener('click', function () {
+      var show = input.type === 'password';
+      input.type = show ? 'text' : 'password';
+      btn.innerHTML = show ? EYE_OFF : EYE;
+      btn.setAttribute('aria-label', show ? 'Ẩn mật khẩu' : 'Hiện mật khẩu');
+      btn.setAttribute('aria-pressed', show ? 'true' : 'false');
+      input.focus();
+    });
+    wrap.appendChild(btn);
+  });
+})();
+</script>
+</body>
+</html>

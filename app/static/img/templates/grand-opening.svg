@@ -1,0 +1,16 @@
+<svg id="tpl-grand-opening" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 595 842" width="595" height="842">
+  <rect width="595" height="842" fill="#991B1B" />
+  <rect x="25" y="25" width="545" height="792" fill="none" stroke="#FBBF24" stroke-width="3" />
+  <rect x="35" y="35" width="525" height="772" fill="none" stroke="#FBBF24" stroke-width="1" />
+  <text id="header_title" x="297" y="130" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#FDE68A" text-anchor="middle" letter-spacing="4">TRÂN TRỌNG KÍNH MỜI</text>
+  <text id="main_title" x="297" y="205" font-family="Georgia, serif" font-size="46" font-weight="bold" fill="#FBBF24" text-anchor="middle">LỄ KHAI TRƯƠNG</text>
+  <text id="brand_name" x="297" y="280" font-family="Arial, sans-serif" font-size="34" font-weight="bold" fill="#FFFFFF" text-anchor="middle" letter-spacing="2">SHOWROOM HOÀNG GIA</text>
+  <line x1="150" y1="320" x2="445" y2="320" stroke="#FBBF24" stroke-width="2" />
+  <text id="guest_name" x="297" y="385" font-family="Arial, sans-serif" font-size="20" fill="#FEF3C7" text-anchor="middle">Kính mời: Quý Khách Hàng &amp; Đối Tác</text>
+  <text id="description" x="297" y="425" font-family="Arial, sans-serif" font-size="17" fill="#FDE68A" text-anchor="middle">Đến tham dự buổi lễ cắt băng khánh thành</text>
+  <text id="description_2" x="297" y="455" font-family="Arial, sans-serif" font-size="17" fill="#FDE68A" text-anchor="middle">và tiệc trà chúc mừng cùng công ty chúng tôi.</text>
+  <rect x="70" y="510" width="455" height="185" rx="10" fill="#7F1D1D" stroke="#FBBF24" stroke-width="1.5" />
+  <text id="event_time" x="297" y="560" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#FBBF24" text-anchor="middle">09:00 SÁNG — THỨ NĂM, 10/12/2026</text>
+  <text id="venue_name" x="297" y="610" font-family="Arial, sans-serif" font-size="19" font-weight="bold" fill="#FFFFFF" text-anchor="middle">88 Hai Bà Trưng, Quận 1, TP.HCM</text>
+  <text id="rsvp" x="297" y="655" font-family="Arial, sans-serif" font-size="16" fill="#FDE68A" text-anchor="middle">Hotline đón tiếp: 0909 888 777</text>
+</svg>
